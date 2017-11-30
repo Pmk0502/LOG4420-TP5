@@ -11,10 +11,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({name: 'PriceFormatPipe'})
 export class PriceFormatPipe implements PipeTransform {
 
-  transform(value: number): string {
-    let stringPrice = value.toString();
-    let correctPrice = stringPrice.split('.')[0] + ',' + stringPrice.split('.')[1];
-    console.log(correctPrice);
-    return correctPrice;
+  transform(price: number): string {
+    return price.toFixed(2).replace(".", ",") + "$"; //copied from Utils.formatPrice
   }
 }
