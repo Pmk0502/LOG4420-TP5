@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Config } from './config';
+import {Injectable} from '@angular/core';
+import {Config} from './config';
+
+import {HttpClient} from '@angular/common/http';
 
 /**
  * Defines a product.
  */
-export class Product  {
+export class Product {
   id: number;
   name: string;
   price: number;
@@ -22,6 +23,14 @@ export class Product  {
 export class ProductsService {
 
   /**
+   * Initializes a new instance of the ProductsService class.
+   *
+   * @param http                    The HTTP service to use.
+   */
+  constructor(private http: HttpClient) {
+  }
+
+  /**
    * Handles the current error.
    *
    * @param error                   The error to handle.
@@ -31,13 +40,6 @@ export class ProductsService {
     console.error('An error occurred', error);
     return Promise.reject(error.feedbackMessage || error);
   }
-
-  /**
-   * Initializes a new instance of the ProductsService class.
-   *
-   * @param http                    The HTTP service to use.
-   */
-  constructor(private http: Http) { }
 
   /**
    * Gets all the products in the database.
@@ -53,7 +55,7 @@ export class ProductsService {
     }
     return this.http.get(url)
       .toPromise()
-      .then(products => products.json() as Product[])
+      .then(products => products as Product[])
       .catch(ProductsService.handleError);
   }
 
@@ -67,7 +69,7 @@ export class ProductsService {
     const url = `${Config.apiUrl}/products/${productId}`;
     return this.http.get(url)
       .toPromise()
-      .then(product => product.json() as Product)
+      .then(product => product as Product)
       .catch(() => null);
   }
 }

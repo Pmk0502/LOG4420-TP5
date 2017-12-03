@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -15,6 +16,7 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductsService } from './products.service';
 import { PriceFormatPipe} from "./price.pipe";
+import {ShoppingCartService} from "./shopping-cart.service";
 
 // Application routes
 const appRoutes: Routes = [
@@ -45,6 +47,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     RouterModule.forRoot(
       appRoutes,
@@ -52,7 +55,8 @@ const appRoutes: Routes = [
     )
   ],
   providers: [
-    ProductsService
+    ProductsService,
+      ShoppingCartService
   ],
   bootstrap: [AppComponent]
 })

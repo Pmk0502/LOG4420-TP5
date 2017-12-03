@@ -7,23 +7,23 @@
     <div class="col">
       <section >
         <h2>Description</h2>
-        <p id="product-desc">{{product?.description}}</p>
+        <p id="product-desc" innerHtml="{{product?.description}}"></p>
       </section>
       <section>
         <h2>Caractéristiques</h2>
         <ul id="product-features" *ngFor="let feature of product?.features">
-          <li>{{feature}}</li>
-        </ul>
+        <li innerHtml="{{feature}}"></li>
+      </ul>
       </section>
       <hr>
-      <form class="pull-right" id="add-to-cart-form">
+     <!-- <form (ngSubmit)="addToShoppingCart(itemForm.value)" #itemForm="ngForm" class="pull-right" id="add-to-cart-form">
         <label for="product-quantity">Quantité:</label>
-        <input class="form-control" id="product-quantity" name="product-quantity"
+        <input (ngModel)="quantity" class="form-control" id="product-quantity" name="quantity"
                type="number" value="1" min="1" required>
         <button class="btn" title="Ajouter au panier" type="submit">
           <i class="fa fa-cart-plus"></i>&nbsp; Ajouter
         </button>
-      </form>
+      </form>-->
       <p>Prix: <strong id="product-price">{{product?.price | PriceFormatPipe}}</strong></p>
     </div>
   </div>
@@ -31,3 +31,4 @@
     Le produit a été ajouté au panier.
   </div>
 </article>
+<page-not-found *ngIf="product==null"></page-not-found>
