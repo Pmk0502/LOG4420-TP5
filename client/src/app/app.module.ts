@@ -51,7 +51,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false }
+      { enableTracing: false  }
     )
   ],
   providers: [

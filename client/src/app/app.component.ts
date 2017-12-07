@@ -16,4 +16,10 @@ export class AppComponent {
   ];
 
   // TODO: À compléter
+  count = 0;
+
+  onChange(string: string) {
+    'plus' ? this.count++ : this.count--;
+  }
+
 }
