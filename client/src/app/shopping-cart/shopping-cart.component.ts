@@ -15,10 +15,12 @@ export class ShoppingCartComponent implements OnInit {
   // TODO: À compléter
   items: Item [] = [];
   _items: Item[] = [];
-  _products: any = [];
+  _products;
   id: number;
+  quantity: number;
 
   constructor(private http: HttpClient, private cart: ShoppingCartService, private productService: ProductsService) {
+    this._products = [];
   }
 
   ngOnInit() {
@@ -31,11 +33,12 @@ export class ShoppingCartComponent implements OnInit {
         (retrievedItems) => {
           this.items = retrievedItems;
           this.items.forEach(itemFound => {
-            this.id = +itemFound.productId;
-            this.getCorrespondingProduct(this.id)
+            this.getCorrespondingProduct(+itemFound.productId)
               .then(p => {
-                  var item = {'name': p.name, 'price': p.price, 'quantity': itemFound.quantity, 'total': p.price * +itemFound.quantity};
+                  var item = {'productId': p.id,'name': p.name, 'price': p.price, 'quantity': +itemFound.quantity, 'total': p.price * +itemFound.quantity};
                   this._products.push(item);
+                  this.shoppingCartSorter(this._products);
+
                 }
               )
           })
@@ -45,15 +48,42 @@ export class ShoppingCartComponent implements OnInit {
       );
   }
 
-  removeItemFromShoppingCart(){
-    this.cart.removeItem(this.id)
-      .subscribe(
-        this._products.splice(this._products.indexOf(this._products[this.id]), 1)
-    );
+  increaseItemQuantity(item: any){
+
+    this.cart.updateQuantity(item.productId, item.quantity+1).subscribe();
+    this._products[this._products.indexOf(item)].quantity = item.quantity+1;
 
   }
+
+  decreaseItemQuantity(item: any){
+    this.cart.updateQuantity(item.productId, item.quantity-1).subscribe();
+    this._products[this._products.indexOf(item)].quantity = item.quantity-1;
+  }
+
+  removeItemFromShoppingCart(item: any){
+    this.cart.removeItem(item.id).subscribe();
+    this._products.splice(this._products.indexOf(item, 1));
+  }
   getCorrespondingProduct(id: number) {
-    this._products = [];
     return this.productService.getProduct(id);
+  }
+
+  removeAllItems(){
+    this.cart.removeAll().subscribe();
+    this._products = [];
+  }
+
+
+  shoppingCartSorter(items: any){
+    items = items.sort(function(a, b) {
+      var nameA = a["name"].toLowerCase();
+      var nameB = b["name"].toLowerCase();
+      if (nameA > nameB) {
+        return 1;
+      } else if (nameA < nameB) {
+        return -1;
+      }
+      return 0;
+    });
   }
 }

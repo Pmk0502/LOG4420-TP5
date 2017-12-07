@@ -50,13 +50,16 @@ export class ProductComponent implements OnInit {
       this._items = items;
       console.log(items);
       var itemFound = this._items.find((item) => item.productId === this.productId)
-      if (itemFound){
+      if (itemFound) {
         console.log(itemFound);
         this.cart.updateQuantity(this.productId, this.quantity).subscribe();
-        this.added = 1;
-      }else{
+
+      } else {
         this.cart.addItem(this.productId, this.quantity).subscribe();
         this.added = 1;
+        setTimeout(()=>{
+          this.added = 0;
+        }, 5000);
       }
     });
   }
