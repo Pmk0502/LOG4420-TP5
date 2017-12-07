@@ -14,7 +14,7 @@
         <div class="col">
           <div class="form-group">
             <label for="last-name">Nom</label>
-            <input class="form-control" type="text" id="last-name" name="last-name"
+            <input [(ngModel)]="name" class="form-control" type="text" id="last-name" name="last-name"
                    placeholder="Nom" minlength="2" required>
           </div>
         </div>
@@ -55,6 +55,6 @@
         </div>
       </div>
     </section>
-    <button class="btn pull-right" type="submit">Payer <i class="fa fa-angle-double-right"></i></button>
+    <button (ngSubmit)="submit()" class="btn pull-right" type="submit">Payer <i class="fa fa-angle-double-right"></i></button>
   </form>
 </article>

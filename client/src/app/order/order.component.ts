@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ShoppingCartService} from '../shopping-cart.service';
+
+import {Router} from '@angular/router';
+
 declare const $: any;
 
 /**
@@ -11,6 +15,9 @@ declare const $: any;
 export class OrderComponent implements OnInit {
 
   orderForm: any;
+  name:string;
+
+  constructor(private cart: ShoppingCartService, private router: Router){}
 
   /**
    * Occurs when the component is initialized.
@@ -47,7 +54,10 @@ export class OrderComponent implements OnInit {
    */
   submit() {
     if (!this.orderForm.valid()) {
-      return;
+
+      this.cart.removeAll().subscribe();
+      this.router.navigate(['confirmation'])
+
     }
     // TODO: Compléter la soumission des informations lorsque le formulaire soumis est valide.
   }
