@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from '../order.service';
+import {Router} from "@angular/router"
+
 declare const $: any;
 
 /**
@@ -12,6 +15,8 @@ export class OrderComponent implements OnInit {
 
   orderForm: any;
 
+
+  constructor(private orderService: OrderService, public router: Router) { }
   /**
    * Occurs when the component is initialized.
    */
@@ -49,6 +54,8 @@ export class OrderComponent implements OnInit {
     if (!this.orderForm.valid()) {
       return;
     }
-    // TODO: Compléter la soumission des informations lorsque le formulaire soumis est valide.
+    this.orderService.sendOrder(this.orderForm)
+      .subscribe();
+    this.router.navigate(['/confirmation']);
   }
 }
