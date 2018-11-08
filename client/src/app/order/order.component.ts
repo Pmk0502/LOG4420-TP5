@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
+import {Router } from '@angular/router';
 import {ShoppingCartService} from '../shopping-cart.service';
 
-import {Router} from '@angular/router';
-=======
-import { OrderService } from '../order.service';
-import {Router} from "@angular/router"
->>>>>>> master
 
 declare const $: any;
 
@@ -22,10 +17,7 @@ export class OrderComponent implements OnInit {
   orderForm: any;
   name:string;
 
-  constructor(private cart: ShoppingCartService, private router: Router){}
-
-
-  constructor(private orderService: OrderService, public router: Router) { }
+  constructor(private cart: ShoppingCartService, private router: Router) {}
   /**
    * Occurs when the component is initialized.
    */
@@ -66,8 +58,8 @@ export class OrderComponent implements OnInit {
       this.router.navigate(['confirmation'])
 
     }
-    this.orderService.sendOrder(this.orderForm)
-      .subscribe();
+    //this.orderService.sendOrder(this.orderForm)
+      //.subscribe();
     this.router.navigate(['/confirmation']);
   }
 }
